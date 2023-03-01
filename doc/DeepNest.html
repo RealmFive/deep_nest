@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+<meta charset="UTF-8">
+
+<title>module DeepNest - RDoc Documentation</title>
+
+<script type="text/javascript">
+  var rdoc_rel_prefix = "./";
+  var index_rel_prefix = "./";
+</script>
+
+<script src="./js/navigation.js" defer></script>
+<script src="./js/search.js" defer></script>
+<script src="./js/search_index.js" defer></script>
+<script src="./js/searcher.js" defer></script>
+<script src="./js/darkfish.js" defer></script>
+
+<link href="./css/fonts.css" rel="stylesheet">
+<link href="./css/rdoc.css" rel="stylesheet">
+
+
+
+
+<body id="top" role="document" class="module">
+<nav role="navigation">
+  <div id="project-navigation">
+    <div id="home-section" role="region" title="Quick navigation" class="nav-section">
+  <h2>
+    <a href="./index.html" rel="home">Home</a>
+  </h2>
+
+  <div id="table-of-contents-navigation">
+    <a href="./table_of_contents.html#pages">Pages</a>
+    <a href="./table_of_contents.html#classes">Classes</a>
+    <a href="./table_of_contents.html#methods">Methods</a>
+  </div>
+</div>
+
+    <div id="search-section" role="search" class="project-section initially-hidden">
+  <form action="#" method="get" accept-charset="utf-8">
+    <div id="search-field-wrapper">
+      <input id="search-field" role="combobox" aria-label="Search"
+             aria-autocomplete="list" aria-controls="search-results"
+             type="text" name="search" placeholder="Search" spellcheck="false"
+             title="Type to search, Up and Down to navigate, Enter to load">
+    </div>
+
+    <ul id="search-results" aria-label="Search Results"
+        aria-busy="false" aria-expanded="false"
+        aria-atomic="false" class="initially-hidden"></ul>
+  </form>
+</div>
+
+  </div>
+
+  
+
+  <div id="class-metadata">
+    
+    
+    
+    
+    <!-- Method Quickref -->
+<div id="method-list-section" class="nav-section">
+  <h3>Methods</h3>
+
+  <ul class="link-list" role="directory">
+    
+    <li ><a href="#method-c-deep_dup">::deep_dup</a>
+    
+    <li ><a href="#method-c-deep_equal-3F">::deep_equal?</a>
+    
+    <li ><a href="#method-c-deep_merge">::deep_merge</a>
+    
+    <li ><a href="#method-c-deep_stringify_keys">::deep_stringify_keys</a>
+    
+    <li ><a href="#method-c-deep_stringify_values">::deep_stringify_values</a>
+    
+    <li ><a href="#method-c-deep_transform_keys">::deep_transform_keys</a>
+    
+    <li ><a href="#method-c-deep_transform_values">::deep_transform_values</a>
+    
+  </ul>
+</div>
+
+  </div>
+</nav>
+
+<main role="main" aria-labelledby="module-DeepNest">
+  <h1 id="module-DeepNest" class="module">
+    module DeepNest
+  </h1>
+
+  <section class="description">
+    
+<p>Primary namespace for the deep_nest gem.</p>
+
+  </section>
+
+  
+  <section id="5Buntitled-5D" class="documentation-section">
+    
+
+    
+
+    
+    <section class="constants-list">
+      <header>
+        <h3>Constants</h3>
+      </header>
+      <dl>
+      
+        <dt id="VERSION">VERSION
+        
+        <dd>
+        
+      
+      </dl>
+    </section>
+    
+
+    
+
+    
+     <section id="public-class-5Buntitled-5D-method-details" class="method-section">
+       <header>
+         <h3>Public Class Methods</h3>
+       </header>
+
+    
+      <div id="method-c-deep_dup" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">deep_dup</span><span
+            class="method-args">(obj)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>Returns a deep copy of the passed object</p>
+
+<p>@param obj [Object] The object to be deep copied.</p>
+
+<p>@return [obj] The deep copy of the passed object.</p>
+          
+          
+
+          
+          <div class="method-source-code" id="deep_dup-source">
+            <pre><span class="ruby-comment"># File lib/deep_nest.rb, line 15</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">deep_dup</span>(<span class="ruby-identifier">obj</span>)
+  <span class="ruby-keyword">case</span> <span class="ruby-identifier">obj</span>
+  <span class="ruby-keyword">when</span> <span class="ruby-constant">Array</span>
+    <span class="ruby-identifier">obj</span>.<span class="ruby-identifier">map</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">x</span><span class="ruby-operator">|</span> <span class="ruby-identifier">deep_dup</span>(<span class="ruby-identifier">x</span>) }
+  <span class="ruby-keyword">when</span> <span class="ruby-constant">Hash</span>
+    <span class="ruby-identifier">obj</span>.<span class="ruby-identifier">transform_values</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">v</span><span class="ruby-operator">|</span> <span class="ruby-identifier">deep_dup</span>(<span class="ruby-identifier">v</span>) }
+  <span class="ruby-keyword">else</span>
+    <span class="ruby-identifier">obj</span>.<span class="ruby-identifier">dup</span>
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-c-deep_equal-3F" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">deep_equal?</span><span
+            class="method-args">(obj1, obj2)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>Returns true if the passed objects are the same object, false otherwise.</p>
+
+<p>@param obj1 [Object] First object to be compared.</p>
+
+<p>@param obj2 [Object] Second object to be compared.</p>
+
+<p>@return [true] If passed objects are the same object.</p>
+
+<p>@return [false] If passed objects are not the same object.</p>
+          
+          
+
+          
+          <div class="method-source-code" id="deep_equal-3F-source">
+            <pre><span class="ruby-comment"># File lib/deep_nest.rb, line 58</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">deep_equal?</span>(<span class="ruby-identifier">obj1</span>, <span class="ruby-identifier">obj2</span>)
+  <span class="ruby-identifier">obj1</span>.<span class="ruby-identifier">object_id</span> <span class="ruby-operator">==</span> <span class="ruby-identifier">obj2</span>.<span class="ruby-identifier">object_id</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-c-deep_merge" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">deep_merge</span><span
+            class="method-args">(hash1, hash2, &amp;block)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>Returns a hash with the passed hashes recursively merged. An optional block can be passed to merge values.</p>
+
+<p>@param hash1 [Hash] The first hash to be merged.</p>
+
+<p>@param hash2 [Hash] The second hash to be merged.</p>
+
+<p>@yield [&amp;block] Operation to merge values of the hashes.</p>
+
+<p>@return [Hash] The hash with recursively merged hashes.</p>
+          
+          
+
+          
+          <div class="method-source-code" id="deep_merge-source">
+            <pre><span class="ruby-comment"># File lib/deep_nest.rb, line 36</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">deep_merge</span>(<span class="ruby-identifier">hash1</span>, <span class="ruby-identifier">hash2</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)
+  <span class="ruby-identifier">hash1</span>.<span class="ruby-identifier">merge</span>(<span class="ruby-identifier">hash2</span>) <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">k</span>, <span class="ruby-identifier">v1</span>, <span class="ruby-identifier">v2</span><span class="ruby-operator">|</span>
+    <span class="ruby-keyword">if</span> <span class="ruby-identifier">v1</span>.<span class="ruby-identifier">is_a?</span>(<span class="ruby-constant">Hash</span>) <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">v2</span>.<span class="ruby-identifier">is_a?</span>(<span class="ruby-constant">Hash</span>)
+      <span class="ruby-identifier">deep_merge</span>(<span class="ruby-identifier">v1</span>, <span class="ruby-identifier">v2</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)
+    <span class="ruby-keyword">elsif</span> <span class="ruby-identifier">block_given?</span>
+      <span class="ruby-identifier">block</span>.<span class="ruby-identifier">call</span>(<span class="ruby-identifier">k</span>, <span class="ruby-identifier">v1</span>, <span class="ruby-identifier">v2</span>)
+    <span class="ruby-keyword">else</span>
+      <span class="ruby-identifier">v2</span>
+    <span class="ruby-keyword">end</span>
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-c-deep_stringify_keys" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">deep_stringify_keys</span><span
+            class="method-args">(hash)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>Returns a hash with its keys converted to strings.</p>
+
+<p>@param hash [Hash] The hash to stringify its keys.</p>
+
+<p>@return [Hash] The transformed hash with stringiified keys.</p>
+          
+          
+
+          
+          <div class="method-source-code" id="deep_stringify_keys-source">
+            <pre><span class="ruby-comment"># File lib/deep_nest.rb, line 108</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">deep_stringify_keys</span>(<span class="ruby-identifier">hash</span>)
+  <span class="ruby-identifier">deep_transform_keys</span>(<span class="ruby-identifier">hash</span>, <span class="ruby-operator">&amp;</span><span class="ruby-value">:to_s</span>)
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-c-deep_stringify_values" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">deep_stringify_values</span><span
+            class="method-args">(hash)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>Returns a hash with its values converted to strings.</p>
+
+<p>@param hash [Hash] The hash to stringify its values.</p>
+
+<p>@return [Hash] The transformed hash with stringiified values.</p>
+          
+          
+
+          
+          <div class="method-source-code" id="deep_stringify_values-source">
+            <pre><span class="ruby-comment"># File lib/deep_nest.rb, line 118</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">deep_stringify_values</span>(<span class="ruby-identifier">hash</span>)
+  <span class="ruby-identifier">deep_transform_values</span>(<span class="ruby-identifier">hash</span>, <span class="ruby-operator">&amp;</span><span class="ruby-value">:to_s</span>)
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-c-deep_transform_keys" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">deep_transform_keys</span><span
+            class="method-args">(hash) { |k| ... }</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>Returns a hash with its keys modified by the passed block.</p>
+
+<p>@param hash [Hash] The hash to transform its keys.</p>
+
+<p>@yield [&amp;block] Operation to modify hash&#39;s keys.</p>
+
+<p>@return [Hash] The hash with transformed keys.</p>
+          
+          
+
+          
+          <div class="method-source-code" id="deep_transform_keys-source">
+            <pre><span class="ruby-comment"># File lib/deep_nest.rb, line 70</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">deep_transform_keys</span>(<span class="ruby-identifier">hash</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)
+  <span class="ruby-keyword">case</span> <span class="ruby-identifier">hash</span>
+  <span class="ruby-keyword">when</span> <span class="ruby-constant">Hash</span>
+    <span class="ruby-identifier">hash</span>.<span class="ruby-identifier">each_with_object</span>({}) <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span>(<span class="ruby-identifier">k</span>, <span class="ruby-identifier">v</span>), <span class="ruby-identifier">result</span><span class="ruby-operator">|</span>
+      <span class="ruby-identifier">result</span>[<span class="ruby-keyword">yield</span>(<span class="ruby-identifier">k</span>)] = <span class="ruby-identifier">deep_transform_keys</span>(<span class="ruby-identifier">v</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)
+    <span class="ruby-keyword">end</span>
+  <span class="ruby-keyword">when</span> <span class="ruby-constant">Array</span>
+    <span class="ruby-identifier">hash</span>.<span class="ruby-identifier">map</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">e</span><span class="ruby-operator">|</span> <span class="ruby-identifier">deep_transform_keys</span>(<span class="ruby-identifier">e</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>) }
+  <span class="ruby-keyword">else</span>
+    <span class="ruby-identifier">hash</span>
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-c-deep_transform_values" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">deep_transform_values</span><span
+            class="method-args">(hash) { |hash| ... }</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>Returns a hash with its values modified by the passed block.</p>
+
+<p>@param hash [Hash] The hash to transform its values.</p>
+
+<p>@yield [&amp;block] Operation to modify hash&#39;s values.</p>
+
+<p>@return [Hash] The hash with transformed values.</p>
+          
+          
+
+          
+          <div class="method-source-code" id="deep_transform_values-source">
+            <pre><span class="ruby-comment"># File lib/deep_nest.rb, line 91</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">deep_transform_values</span>(<span class="ruby-identifier">hash</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)
+  <span class="ruby-keyword">case</span> <span class="ruby-identifier">hash</span>
+  <span class="ruby-keyword">when</span> <span class="ruby-constant">Hash</span>
+    <span class="ruby-identifier">hash</span>.<span class="ruby-identifier">transform_values</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">v</span><span class="ruby-operator">|</span> <span class="ruby-identifier">deep_transform_values</span>(<span class="ruby-identifier">v</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>) }
+  <span class="ruby-keyword">when</span> <span class="ruby-constant">Array</span>
+    <span class="ruby-identifier">hash</span>.<span class="ruby-identifier">map</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">e</span><span class="ruby-operator">|</span> <span class="ruby-identifier">deep_transform_values</span>(<span class="ruby-identifier">e</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>) }
+  <span class="ruby-keyword">else</span>
+    <span class="ruby-keyword">yield</span>(<span class="ruby-identifier">hash</span>)
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+    </section>
+  
+  </section>
+
+</main>
+
+
+<footer id="validator-badges" role="contentinfo">
+  <p><a href="https://validator.w3.org/check/referer">Validate</a>
+  <p>Generated by <a href="https://ruby.github.io/rdoc/">RDoc</a> 6.2.1.1.
+  <p>Based on <a href="http://deveiate.org/projects/Darkfish-RDoc/">Darkfish</a> by <a href="http://deveiate.org">Michael Granger</a>.
+</footer>
+

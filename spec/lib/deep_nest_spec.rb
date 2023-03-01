@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 RSpec.describe 'DeepNest' do
-  describe '::deep_dup(structure)' do
+  describe '::deep_dup(obj)' do
     subject { DeepNest.deep_dup(original) }
 
     describe 'when original structure is a scalar' do
@@ -217,7 +217,7 @@ RSpec.describe 'DeepNest' do
     end
   end
 
-  describe 'deep_transform_keys(obj, &block)' do
+  describe 'deep_transform_keys(hash, &block)' do
     describe 'with passed simple hash and block' do
       subject { DeepNest.deep_transform_keys(hash) { |key| key.to_s.upcase } }
 
@@ -287,7 +287,7 @@ RSpec.describe 'DeepNest' do
     end
   end
 
-  describe 'deep_transform_values(obj, &block)' do
+  describe 'deep_transform_values(hash, &block)' do
     describe 'with passed simple hash and block' do
       subject { DeepNest.deep_transform_values(hash) { |value| value.to_s.upcase } }
 
@@ -358,7 +358,7 @@ RSpec.describe 'DeepNest' do
     end
   end
 
-  describe 'deep_stringify_keys(obj)' do
+  describe 'deep_stringify_keys(hash)' do
     subject { DeepNest.deep_stringify_keys(hash) }
 
     describe 'with passed simple hash' do
@@ -408,7 +408,7 @@ RSpec.describe 'DeepNest' do
     end
   end
 
-  describe 'deep_stringify_values(obj)' do
+  describe 'deep_stringify_values(hash)' do
     subject { DeepNest.deep_stringify_values(hash) }
 
     describe 'with passed simple hash and block' do
