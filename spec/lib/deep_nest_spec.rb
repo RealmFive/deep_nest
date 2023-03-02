@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 RSpec.describe 'DeepNest' do
-  describe '::deep_dup(obj)' do
+  describe '::deep_dup(structure)' do
     subject { DeepNest.deep_dup(original) }
 
     describe 'when original structure is a scalar' do
@@ -408,53 +408,42 @@ RSpec.describe 'DeepNest' do
     end
   end
 
-  describe 'deep_stringify_values(hash)' do
-    subject { DeepNest.deep_stringify_values(hash) }
+  describe 'deep_symbolize_keys(hash)' do
+    subject { DeepNest.deep_symbolize_keys(hash) }
 
-    describe 'with passed simple hash and block' do
-      let(:hash) { { str: 'String', int: 27, float: 1.0, bool: true } }
-      let(:expected_results) { { str: 'String', int: '27', float: '1.0', bool: 'true' } }
+    describe 'with passed simple hash' do
+      let(:hash) { { 'str': 'String', 'int': 27, 'float': 1.0, 'bool': true } }
+      let(:expected_results) { { str: 'String', int: 27, float: 1.0, bool: true } }
 
       it 'returns expected results' do
         is_expected.to eq(expected_results)
-        is_expected.to eq(hash.transform_values(&:to_s))
+        is_expected.to eq(hash.transform_keys(&:to_sym))
       end
     end
 
     describe 'with nested hash in passed hash' do
-      let(:hash) { { a: 1, [1, 2] => { a: %w[foo bar], b: [1, 'hello'] } } }
-      let(:expected_results) { { a: '1', [1, 2] => { a: %w[foo bar], b: %w[1 hello] } } }
+      let(:hash) { { 'a': 1, '["b", 1.0]': { 'a': %w[foo bar], 'b': 'hello' } } }
+      let(:expected_results) { { a: 1, "[\"b\", 1.0]": { a: %w[foo bar], b: 'hello' } } }
 
       it 'returns expected results' do
         is_expected.to eq(expected_results)
-      end
-    end
-
-    describe 'with passed hash in old syntax' do
-      let(:hash) { { :font_size => 10, :font_family => 'Arial' } }
-      let(:expected_results) { { font_size: '10', font_family: 'Arial' } }
-
-      it 'returns expected results' do
-        is_expected.to eq(expected_results)
-        is_expected.to eq(hash.transform_values(&:to_s))
       end
     end
 
     describe 'with hash in passed array' do
-      let(:hash) { [1, 'hello', 2.0, { a: 1 }] }
-      let(:expected_results) { ['1', 'hello', '2.0', { a: '1' }] }
+      let(:hash) { [1, 'a', 2.0, { 'a': 1 }] }
+      let(:expected_results) { [1, 'a', 2.0, { a: 1 }] }
 
-      it 'returns array with all values stringified' do
+      it 'returns array with hash that has symbolized key' do
         is_expected.to eq(expected_results)
       end
     end
 
     describe 'with passed object that is not a hash or array' do
-      let(:hash) { 1.0 }
-      let(:expected_results) { '1.0' }
+      let(:hash) { 'hello' }
 
-      it 'returns stringified object' do
-        is_expected.to eq(expected_results)
+      it 'returns object' do
+        is_expected.to eq(hash)
       end
     end
   end

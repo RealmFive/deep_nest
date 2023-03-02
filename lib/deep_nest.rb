@@ -5,21 +5,22 @@ require_relative "deep_nest/version"
 ##
 # Primary namespace for the deep_nest gem.
 module DeepNest
+  class Error < StandardError; end
   class << self
     ##
-    # Returns a deep copy of the passed object
+    # Returns a deep copy of the passed hash or array
     #
-    # @param obj [Object] The object to be deep copied.
+    # @param structure [Hash, Array] The hash or array to be deep copied.
     #
-    # @return [obj] The deep copy of the passed object.
-    def deep_dup(obj)
-      case obj
+    # @return [obj] The deep copy of the passed hash or array.
+    def deep_dup(structure)
+      case structure
       when Array
-        obj.map { |x| deep_dup(x) }
+        structure.map { |x| deep_dup(x) }
       when Hash
-        obj.transform_values { |v| deep_dup(v) }
+        structure.transform_values { |v| deep_dup(v) }
       else
-        obj.dup
+        structure.dup
       end
     end
 
@@ -110,13 +111,13 @@ module DeepNest
     end
 
     ##
-    # Returns a hash with its values converted to strings.
+    # Returns a hash with its keys converted to symbols.
     #
-    # @param hash [Hash] The hash to stringify its values.
+    # @param hash [Hash] The hash to symbolize its keys.
     #
-    # @return [Hash] The transformed hash with stringiified values.
-    def deep_stringify_values(hash)
-      deep_transform_values(hash, &:to_s)
+    # @return [Hash] The transformed hash with symbolized keys.
+    def deep_symbolize_keys(hash)
+      deep_transform_keys(hash, &:to_sym)
     end
   end
 end
