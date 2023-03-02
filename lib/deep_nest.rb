@@ -12,7 +12,7 @@ module DeepNest
     #
     # @param structure [Hash, Array] The hash or array to be deep copied.
     #
-    # @return [obj] The deep copy of the passed hash or array.
+    # @return [Hash, Array] The deep copy of the passed hash or array.
     def deep_dup(structure)
       case structure
       when Array
@@ -61,63 +61,63 @@ module DeepNest
     end
 
     ##
-    # Returns a hash with its keys modified by the passed block.
+    # Returns a hash or array with all hash keys modified by the passed block.
     #
-    # @param hash [Hash] The hash to transform its keys.
+    # @param structure [Hash, Array] The hash or array to transform the keys.
     #
-    # @yield [&block] Operation to modify hash's keys.
+    # @yield [&block] Operation to modify the keys.
     #
-    # @return [Hash] The hash with transformed keys.
-    def deep_transform_keys(hash, &block)
-      case hash
+    # @return [Hash, Array] The hash or array with transformed keys.
+    def deep_transform_keys(structure, &block)
+      case structure
       when Hash
-        hash.each_with_object({}) do |(k, v), result|
+        structure.each_with_object({}) do |(k, v), result|
           result[yield(k)] = deep_transform_keys(v, &block)
         end
       when Array
-        hash.map { |e| deep_transform_keys(e, &block) }
+        structure.map { |e| deep_transform_keys(e, &block) }
       else
-        hash
+        structure
       end
     end
 
     ##
-    # Returns a hash with its values modified by the passed block.
+    # Returns a hash or array with all hash values modified by the passed block.
     #
-    # @param hash [Hash] The hash to transform its values.
+    # @param structure [Hash, Array] The hash or array to transform the values.
     #
-    # @yield [&block] Operation to modify hash's values.
+    # @yield [&block] Operation to modify the values.
     #
-    # @return [Hash] The hash with transformed values.
-    def deep_transform_values(hash, &block)
-      case hash
+    # @return [Hash, Array] The hash or array with transformed values.
+    def deep_transform_values(structure, &block)
+      case structure
       when Hash
-        hash.transform_values { |v| deep_transform_values(v, &block) }
+        structure.transform_values { |v| deep_transform_values(v, &block) }
       when Array
-        hash.map { |e| deep_transform_values(e, &block) }
+        structure.map { |e| deep_transform_values(e, &block) }
       else
-        yield(hash)
+        yield(structure)
       end
     end
 
     ##
-    # Returns a hash with its keys converted to strings.
+    # Returns a hash or array with all hash keys converted to strings.
     #
-    # @param hash [Hash] The hash to stringify its keys.
+    # @param structure [Hash, Array] The hash or array to stringify the keys
     #
-    # @return [Hash] The transformed hash with stringiified keys.
-    def deep_stringify_keys(hash)
-      deep_transform_keys(hash, &:to_s)
+    # @return [Hash, Array] The hash or array with stringified keys.
+    def deep_stringify_keys(structure)
+      deep_transform_keys(structure, &:to_s)
     end
 
     ##
-    # Returns a hash with its keys converted to symbols.
+    # Returns a hash or array with all hash keys converted to symbols.
     #
-    # @param hash [Hash] The hash to symbolize its keys.
+    # @param structure [Hash, Array] The hash or array to symbolize the keys
     #
-    # @return [Hash] The transformed hash with symbolized keys.
-    def deep_symbolize_keys(hash)
-      deep_transform_keys(hash, &:to_sym)
+    # @return [Hash, Array] The hash or array with symbolized keys.
+    def deep_symbolize_keys(structure)
+      deep_transform_keys(structure, &:to_sym)
     end
   end
 end
