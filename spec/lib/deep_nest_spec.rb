@@ -351,8 +351,8 @@ RSpec.describe 'DeepNest' do
         let(:obj1) { { a: 1, b: 'string', c: true, d: 2.2 } }
         let(:obj2) { { a: 1, b: 'string', d: 2.2, c: true } }
 
-        it 'returns false' do
-          is_expected.to be_falsy
+        it 'returns true' do
+          is_expected.to be_truthy
         end
       end
 

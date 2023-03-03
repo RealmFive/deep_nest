@@ -64,8 +64,6 @@ module DeepNest
         when Array
           struct1.zip(struct2).each { |e1, e2| deep_equal?(e1, e2) }
         when Hash
-          return false unless struct1.keys.eql? struct2.keys
-
           struct1.merge(struct2).each { |v1, v2| deep_equal?(v1, v2) }
         else
           true
