@@ -35,6 +35,8 @@ module DeepNest
     #
     # @return [Hash] The hash with recursively merged hashes.
     def deep_merge(hash1, hash2, &block)
+      raise Error, 'Parameters must be hashes' unless hash1.is_a?(Hash) && hash2.is_a?(Hash)
+
       hash1.merge(hash2) do |k, v1, v2|
         if v1.is_a?(Hash) && v2.is_a?(Hash)
           deep_merge(v1, v2, &block)

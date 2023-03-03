@@ -140,6 +140,15 @@ RSpec.describe 'DeepNest' do
           is_expected.to eq(expected_results)
         end
       end
+
+      describe 'with non-hash as parameter' do
+        let(:h1) { [1, 2, 3] }
+        let(:h2) { { a: 100, b: 200 } }
+
+        it 'raises Error' do
+          expect { subject }.to raise_error(DeepNest::Error)
+        end
+      end
     end
 
     describe 'if block given' do
