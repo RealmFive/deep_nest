@@ -177,39 +177,225 @@ RSpec.describe 'DeepNest' do
     end
   end
 
-  describe '::deep_equal?(obj1, obj2)' do
+  describe '::deep_equal?(structure1, structure2)' do
     subject { DeepNest.deep_equal?(obj1, obj2) }
 
-    describe 'when parameters are the same object' do
-      let(:obj1) { 'hello' }
-      let(:obj2) { obj1 }
+    describe 'when parameters are scalar' do
+      describe 'with parameters that are the same' do
+        let(:obj1) { 1 }
+        let(:obj2) { 1 }
 
-      it 'returns true' do
-        is_expected.to be_truthy
+        it 'returns true' do
+          is_expected.to be_truthy
+        end
+      end
+
+      describe 'with integer and float that are same value' do
+        let(:obj1) { 1 }
+        let(:obj2) { 1.0 }
+
+        it 'returns false' do
+          is_expected.to be_falsy
+        end
+      end
+
+      describe 'with integer and string that are same value' do
+        let(:obj1) { 1 }
+        let(:obj2) { '1' }
+
+        it 'returns false' do
+          is_expected.to be_falsy
+        end
       end
     end
 
-    describe 'when parameters have same value but are different objects' do
-      let(:obj1) { 'hello' }
-      let(:obj2) { obj1.dup }
+    describe 'when parameters are arrays' do
+      describe 'with simple arrays have same values and order' do
+        let(:obj1) { [1, 'hi', 2.0, true] }
+        let(:obj2) { [1, 'hi', 2.0, true] }
 
-      it 'returns false' do
-        is_expected.to be_falsy
+        it 'returns true' do
+          is_expected.to be_truthy
+        end
+      end
+
+      describe 'with simple arrays have same values but different order' do
+        let(:obj1) { [1, 'hi', 2.0, true] }
+        let(:obj2) { [1, 'hi', true, 2.0] }
+
+        it 'returns false' do
+          is_expected.to be_falsy
+        end
+      end
+
+      describe 'with simple arrays that is a subset of another' do
+        let(:obj1) { [1, 'hi', 2.0, true] }
+        let(:obj2) { [1, 'hi', 2.0] }
+
+        it 'returns false' do
+          is_expected.to be_falsy
+        end
+      end
+
+      describe 'with matching arrays that have arrays' do
+        let(:obj1) { [%w[a b c], %w[d e f], %w[g h i]] }
+        let(:obj2) { [%w[a b c], %w[d e f], %w[g h i]] }
+
+        it 'returns true' do
+          is_expected.to be_truthy
+        end
+      end
+
+      describe 'with differing arrays that have arrays' do
+        let(:obj1) { [%w[a b c], %w[d e f], %w[g h i]] }
+        let(:obj2) { [%w[a b c], %w[d e f], %w[j k l]] }
+
+        it 'returns false' do
+          is_expected.to be_falsy
+        end
+      end
+
+      describe 'with matching arrays that have deeply nested arrays' do
+        let(:obj1) { [1, [2, [3, 4, [5, 6, [7]]], 8], 9] }
+        let(:obj2) { [1, [2, [3, 4, [5, 6, [7]]], 8], 9] }
+
+        it 'returns true' do
+          is_expected.to be_truthy
+        end
+      end
+
+      describe 'with differing arrays that have deeply nested arrays' do
+        let(:obj1) { [1, [2, [3, 4, [5, 6, [7]]], 8], 9] }
+        let(:obj2) { [1, [2, [3, 4, [5, 6, [7, [10]]]], 8], 9] }
+
+        it 'returns false' do
+          is_expected.to be_falsy
+        end
+      end
+
+      describe 'with matching arrays that have simple hashes' do
+        let(:obj1) { [1, 'hi', 2.0, true, { a: 1, b: 2 }] }
+        let(:obj2) { [1, 'hi', 2.0, true, { a: 1, b: 2 }] }
+
+        it 'returns true' do
+          is_expected.to be_truthy
+        end
+      end
+
+      describe 'with differing arrays that have simple hashes' do
+        let(:obj1) { [1, 'hi', 2.0, true, { a: 1, b: 2 }] }
+        let(:obj2) { [1, 'hi', 2.0, true, { a: 1, b: '2' }] }
+
+        it 'returns false' do
+          is_expected.to be_falsy
+        end
+      end
+
+      describe 'with matching arrays that have deeply nested hashes' do
+        let(:obj1) { [1, 'hi', 2.0, true, hi: [{ a: { b: { c: { d: [{ e: 1 }] } } } }]] }
+        let(:obj2) { [1, 'hi', 2.0, true, hi: [{ a: { b: { c: { d: [{ e: 1 }] } } } }]] }
+
+        it 'returns true' do
+          is_expected.to be_truthy
+        end
+      end
+
+      describe 'with differing arrays that have deeply nested hashes' do
+        let(:obj1) { [1, 'hi', 2.0, true, hi: [{ a: { b: { c: { d: [{ e: 1 }] } } } }]] }
+        let(:obj2) { [1, 'hi', 2.0, true, hi: [{ a: { b: { c: { d: [{ e: 1.0 }] } } } }]] }
+
+        it 'returns false' do
+          is_expected.to be_falsy
+        end
       end
     end
 
-    describe 'when parameters are different values' do
-      let(:obj1) { 'hello' }
-      let(:obj2) { 'hi' }
+    describe 'when parameters are hashes' do
+      describe 'with simple hashes with same key-value pairs and order' do
+        let(:obj1) { { a: 1, b: 'string', c: true, d: 2.2, e: [1, 'a', true, 3.3] } }
+        let(:obj2) { { a: 1, b: 'string', c: true, d: 2.2, e: [1, 'a', true, 3.3] } }
 
-      it 'returns false' do
-        is_expected.to be_falsy
+        it 'returns true' do
+          is_expected.to be_truthy
+        end
+      end
+
+      describe 'with simple hashes with same keys but different values' do
+        let(:obj1) { { a: 1, b: 'string', c: true, d: 2.2 } }
+        let(:obj2) { { a: 1, b: 'string', c: false, d: 2.2 } }
+
+        it 'returns false' do
+          is_expected.to be_falsy
+        end
+      end
+
+      describe 'with simple hashes with same values but different keys' do
+        let(:obj1) { { a: 1, b: 'string', c: true, d: 2.2 } }
+        let(:obj2) { { a: 1, b: 'string', 'c': true, e: 2.2 } }
+
+        it 'returns false' do
+          is_expected.to be_falsy
+        end
+      end
+
+      describe 'with simple hashes with same key-value pairs but in different order' do
+        let(:obj1) { { a: 1, b: 'string', c: true, d: 2.2 } }
+        let(:obj2) { { a: 1, b: 'string', d: 2.2, c: true } }
+
+        it 'returns false' do
+          is_expected.to be_falsy
+        end
+      end
+
+      describe 'with one hash that is a subset of another' do
+        let(:obj1) { { a: 1, b: 'string', c: true, d: 2.2 } }
+        let(:obj2) { { a: 1, b: 'string', c: true } }
+
+        it 'returns false' do
+          is_expected.to be_falsy
+        end
+      end
+
+      describe 'with matching hashes with hashes' do
+        let(:obj1) { { a: { a: 'a' }, b: { b: 'b' }, c: { c: 'c' } } }
+        let(:obj2) { { a: { a: 'a' }, b: { b: 'b' }, c: { c: 'c' } } }
+
+        it 'returns true' do
+          is_expected.to be_truthy
+        end
+      end
+
+      describe 'with differing hashes with hashes' do
+        let(:obj1) { { a: { a: 'a' }, b: { b: 'b' }, c: { c: 'c' } } }
+        let(:obj2) { { a: { a: 'a' }, b: { b: 'b' }, c: { c: 'C' } } }
+
+        it 'returns false' do
+          is_expected.to be_falsy
+        end
+      end
+
+      describe 'with matching hashes with deeply nested hashes' do
+        let(:obj1) { { a: { b: [{ c: { d: [{ e: 1 }] } }] } } }
+        let(:obj2) { { a: { b: [{ c: { d: [{ e: 1 }] } }] } } }
+
+        it 'returns true' do
+          is_expected.to be_truthy
+        end
+      end
+
+      describe 'with differing hashes deeply nested hashes' do
+        let(:obj1) { { a: { b: [{ c: { d: [{ e: 1.0 }] } }] } } }
+        let(:obj2) { { a: { b: [{ c: { d: [{ e: 1 }] } }] } } }
+
+        it 'returns false' do
+          is_expected.to be_falsy
+        end
       end
     end
 
-    describe 'when parameters are integer and float with same value' do
-      let(:obj1) { 1 }
-      let(:obj2) { 1.0 }
+    describe 'when parameters are hash and array' do
+      let(:obj1) { { a: 1, b: 2, c: 3 } }
+      let(:obj2) { [1, 2, 3] }
 
       it 'returns false' do
         is_expected.to be_falsy

@@ -47,17 +47,30 @@ module DeepNest
     end
 
     ##
-    # Returns true if the passed objects are the same object, false otherwise.
+    # Returns true if the passed parameters are equal in structure, order, and values, false otherwise.
     #
-    # @param obj1 [Object] First object to be compared.
+    # @param structure1 [Scalar, Hash, Array] First structure to be compared.
     #
-    # @param obj2 [Object] Second object to be compared.
+    # @param structure2 [Scalar, Hash, Array] Second structure to be compared.
     #
-    # @return [true] If passed objects are the same object.
+    # @return [true] If parameters are equal in structure, order, and values.
     #
-    # @return [false] If passed objects are not the same object.
-    def deep_equal?(obj1, obj2)
-      obj1.object_id == obj2.object_id
+    # @return [false] If parameters are not equal in structure, order, and values.
+    def deep_equal?(struct1, struct2)
+      if struct1.eql?(struct2)
+        case struct1
+        when Array
+          struct1.zip(struct2).each { |e1, e2| deep_equal?(e1, e2) }
+        when Hash
+          return false unless struct1.keys.eql? struct2.keys
+
+          struct1.merge(struct2).each { |v1, v2| deep_equal?(v1, v2) }
+        else
+          true
+        end
+      else
+        false
+      end
     end
 
     ##
