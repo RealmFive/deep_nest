@@ -49,15 +49,15 @@ module DeepNest
     end
 
     ##
-    # Returns true if the passed parameters are same in structure, order, and values, false otherwise.
+    # Returns true if the passed parameters are same in structure and values, false otherwise.
     #
     # @param struct1 [Scalar, Hash, Array] First structure to be compared.
     #
     # @param struct2 [Scalar, Hash, Array] Second structure to be compared.
     #
-    # @return [true] If parameters are equal in structure, order, and values.
+    # @return [true] If parameters are equal in structure and values.
     #
-    # @return [false] If parameters are not equal in structure, order, and values.
+    # @return [false] If parameters are not equal in structure and values.
     def deep_equal?(struct1, struct2)
       if struct1.eql?(struct2)
         case struct1
