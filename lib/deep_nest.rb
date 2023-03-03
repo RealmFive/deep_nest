@@ -8,7 +8,7 @@ module DeepNest
   class Error < StandardError; end
   class << self
     ##
-    # Returns a deep copy of the passed hash or array
+    # Returns a deep copy of the passed hash or array.
     #
     # @param structure [Hash, Array] The hash or array to be deep copied.
     #
@@ -49,11 +49,11 @@ module DeepNest
     end
 
     ##
-    # Returns true if the passed parameters are equal in structure, order, and values, false otherwise.
+    # Returns true if the passed parameters are same in structure, order, and values, false otherwise.
     #
-    # @param structure1 [Scalar, Hash, Array] First structure to be compared.
+    # @param struct1 [Scalar, Hash, Array] First structure to be compared.
     #
-    # @param structure2 [Scalar, Hash, Array] Second structure to be compared.
+    # @param struct2 [Scalar, Hash, Array] Second structure to be compared.
     #
     # @return [true] If parameters are equal in structure, order, and values.
     #
