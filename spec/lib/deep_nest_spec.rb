@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
 RSpec.describe 'DeepNest' do
-  describe '::deep_dup(structure)' do
-    subject { DeepNest.deep_dup(original) }
+  describe '::structure.deep_dup' do
+    subject { original.deep_dup }
 
     describe 'when original structure is a scalar' do
       let(:original) { 'hello' }
@@ -95,9 +95,9 @@ RSpec.describe 'DeepNest' do
     end
   end
 
-  describe '::deep_merge(hash1, hash2, &block)' do
+  describe '::hash.deep_merge(other_hash, &block)' do
     describe 'if no block given' do
-      subject { DeepNest.deep_merge(h1, h2) }
+      subject { h1.deep_merge(h2) }
 
       describe 'with two simple hashes passed' do
         let(:h1) { { a: 100, b: 200 } }
@@ -152,7 +152,7 @@ RSpec.describe 'DeepNest' do
     end
 
     describe 'if block given' do
-      subject { DeepNest.deep_merge(h1, h2) { |_, v1, v2| v1 + v2 } }
+      subject { h1.deep_merge(h2) { |_, v1, v2| v1 + v2 } }
 
       describe 'with two simple hashes passed' do
         let(:h1) { { a: 100, b: 200 } }
@@ -186,8 +186,8 @@ RSpec.describe 'DeepNest' do
     end
   end
 
-  describe '::deep_equal?(structure1, structure2)' do
-    subject { DeepNest.deep_equal?(obj1, obj2) }
+  describe '::structure.deep_equal?(other_structure)' do
+    subject { obj1.deep_equal?(obj2) }
 
     describe 'when parameters are scalar' do
       describe 'with parameters that are the same' do
@@ -412,9 +412,9 @@ RSpec.describe 'DeepNest' do
     end
   end
 
-  describe '::deep_transform_keys(structure, &block)' do
+  describe '::structure.deep_transform_keys(&block)' do
     describe 'with passed simple hash and block' do
-      subject { DeepNest.deep_transform_keys(hash) { |key| key.to_s.upcase } }
+      subject { hash.deep_transform_keys { |key| key.to_s.upcase } }
 
       let(:hash) { { str: 'String', num: 27 } }
       let(:expected_results) { { 'STR' => 'String', 'NUM' => 27 } }
@@ -426,7 +426,7 @@ RSpec.describe 'DeepNest' do
     end
 
     describe 'with nested hash in passed hash' do
-      subject { DeepNest.deep_transform_keys(hash) { |key| key.to_s.upcase } }
+      subject { hash.deep_transform_keys { |key| key.to_s.upcase } }
 
       let(:hash) { { a: 1, ['b', 1.0] => { a: %w[foo bar], b: 'hello' } } }
       let(:expected_results) { { 'A' => 1, '["B", 1.0]' => { 'A' => %w[foo bar], 'B' => 'hello' } } }
@@ -437,7 +437,7 @@ RSpec.describe 'DeepNest' do
     end
 
     describe 'with passed hash in old syntax' do
-      subject { DeepNest.deep_transform_keys(hash) { |key| key.to_s.upcase } }
+      subject { hash.deep_transform_keys { |key| key.to_s.upcase } }
 
       let(:hash) { { :font_size => 10, :font_family => 'Arial' } }
       let(:expected_results) { { 'FONT_SIZE' => 10, 'FONT_FAMILY' => 'Arial' } }
@@ -449,7 +449,7 @@ RSpec.describe 'DeepNest' do
     end
 
     describe 'with passed block in alternative format' do
-      subject { DeepNest.deep_transform_keys(hash, &:to_sym) }
+      subject { hash.deep_transform_keys(&:to_sym) }
 
       let(:hash) { { 'a': 1, 'b': 2, 'c': 3 } }
       let(:expected_results) { { a: 1, b: 2, c: 3 } }
@@ -461,7 +461,7 @@ RSpec.describe 'DeepNest' do
     end
 
     describe 'with hash in passed array' do
-      subject { DeepNest.deep_transform_keys(array) { |key| key.to_s.upcase } }
+      subject { array.deep_transform_keys { |key| key.to_s.upcase } }
 
       let(:array) { [1, 'a', 2.0, { hello: 1.0 }] }
       let(:expected_results) { [1, 'a', 2.0, { 'HELLO' => 1.0 }] }
@@ -471,8 +471,8 @@ RSpec.describe 'DeepNest' do
       end
     end
 
-    describe 'with passed object that is not a hash or array' do
-      subject { DeepNest.deep_transform_keys(obj) { |key| key.to_s.upcase } }
+    describe 'with passed scalar' do
+      subject { obj.deep_transform_keys { |key| key.to_s.upcase } }
 
       let(:obj) { 'hello' }
 
@@ -482,9 +482,9 @@ RSpec.describe 'DeepNest' do
     end
   end
 
-  describe '::deep_transform_values(structure, &block)' do
+  describe '::structure.deep_transform_values(&block)' do
     describe 'with passed simple hash and block' do
-      subject { DeepNest.deep_transform_values(hash) { |value| value.to_s.upcase } }
+      subject { hash.deep_transform_values { |value| value.to_s.upcase } }
 
       let(:hash) { { str: 'String', int: 27, float: 1.0, bool: true } }
       let(:expected_results) { { str: 'STRING', int: '27', float: '1.0', bool: 'TRUE' } }
@@ -496,7 +496,7 @@ RSpec.describe 'DeepNest' do
     end
 
     describe 'with nested hash in passed hash' do
-      subject { DeepNest.deep_transform_values(hash) { |value| value.to_s.upcase } }
+      subject { hash.deep_transform_values { |value| value.to_s.upcase } }
 
       let(:hash) { { a: 1, [1, 2] => { a: %w[foo bar], b: [1, 'hello'] } } }
       let(:expected_results) { { a: '1', [1, 2] => { a: %w[FOO BAR], b: %w[1 HELLO] } } }
@@ -507,7 +507,7 @@ RSpec.describe 'DeepNest' do
     end
 
     describe 'with passed hash in old syntax' do
-      subject { DeepNest.deep_transform_values(hash) { |value| value.to_s.upcase } }
+      subject { hash.deep_transform_values { |value| value.to_s.upcase } }
 
       let(:hash) { { :font_size => 10, :font_family => 'Arial' } }
       let(:expected_results) { { font_size: '10', font_family: 'ARIAL' } }
@@ -519,7 +519,7 @@ RSpec.describe 'DeepNest' do
     end
 
     describe 'with passed block in alternative format' do
-      subject { DeepNest.deep_transform_values(hash, &:to_f) }
+      subject { hash.deep_transform_values(&:to_f) }
 
       let(:hash) { { a: 1, b: 2, c: 3 } }
       let(:expected_results) { { a: 1.0, b: 2.0, c: 3.0 } }
@@ -531,7 +531,7 @@ RSpec.describe 'DeepNest' do
     end
 
     describe 'with passed array with hash' do
-      subject { DeepNest.deep_transform_values(array) { |value| value.to_s.upcase } }
+      subject { array.deep_transform_values { |value| value.to_s.upcase } }
 
       let(:array) { [1, 'hello', 2.0, { a: 'hello', b: 1.0 }] }
       let(:expected_results) { ['1', 'HELLO', '2.0', { a: 'HELLO', b: '1.0' }] }
@@ -541,8 +541,8 @@ RSpec.describe 'DeepNest' do
       end
     end
 
-    describe 'with passed object that is not a hash or array' do
-      subject { DeepNest.deep_transform_values(obj) { |value| value.to_s.upcase } }
+    describe 'with passed scalar' do
+      subject { obj.deep_transform_values { |value| value.to_s.upcase } }
 
       let(:obj) { 'hello' }
       let(:expected_results) { 'HELLO' }
@@ -553,8 +553,8 @@ RSpec.describe 'DeepNest' do
     end
   end
 
-  describe '::deep_stringify_keys(structure)' do
-    subject { DeepNest.deep_stringify_keys(structure) }
+  describe '::structure.deep_stringify_keys' do
+    subject { structure.deep_stringify_keys }
 
     describe 'with passed simple hash' do
       let(:structure) { { str: 'String', int: 27, float: 1.0, bool: true } }
@@ -603,8 +603,8 @@ RSpec.describe 'DeepNest' do
     end
   end
 
-  describe '::deep_symbolize_keys(structure)' do
-    subject { DeepNest.deep_symbolize_keys(structure) }
+  describe '::structure.deep_symbolize_keys' do
+    subject { structure.deep_symbolize_keys }
 
     describe 'with passed simple hash' do
       let(:structure) { { 'str': 'String', 'int': 27, 'float': 1.0, 'bool': true } }
