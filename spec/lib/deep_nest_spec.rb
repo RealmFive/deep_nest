@@ -146,7 +146,7 @@ RSpec.describe 'DeepNest' do
         let(:h2) { { a: 100, b: 200 } }
 
         it 'raises Error' do
-          expect { subject }.to raise_error(DeepNest::Error)
+          expect { subject }.to raise_error(DeepNest::Methods::Error)
         end
       end
     end
