@@ -37,7 +37,7 @@ module DeepNest
       # @return [Hash] The hash with recursively merged hashes.
       def deep_merge(hash1, hash2, &block)
         raise Error, 'Parameters must be hashes' unless hash1.is_a?(Hash) && hash2.is_a?(Hash)
-  
+
         hash1.merge(hash2) do |k, v1, v2|
           if v1.is_a?(Hash) && v2.is_a?(Hash)
             deep_merge(v1, v2, &block)
@@ -48,7 +48,7 @@ module DeepNest
           end
         end
       end
-  
+
       ##
       # Returns true if the passed parameters are same in structure and values, false otherwise.
       #
@@ -73,7 +73,7 @@ module DeepNest
           false
         end
       end
-  
+
       ##
       # Returns a hash or array with all hash keys modified by the passed block.
       #
@@ -94,7 +94,7 @@ module DeepNest
           structure
         end
       end
-  
+
       ##
       # Returns a hash or array with all hash values modified by the passed block.
       #
@@ -113,7 +113,7 @@ module DeepNest
           yield(structure)
         end
       end
-  
+
       ##
       # Returns a hash or array with all hash keys converted to strings.
       #
@@ -123,7 +123,7 @@ module DeepNest
       def deep_stringify_keys(structure)
         deep_transform_keys(structure, &:to_s)
       end
-  
+
       ##
       # Returns a hash or array with all hash keys converted to symbols.
       #

@@ -7,15 +7,8 @@ RSpec.describe 'DeepNest' do
     describe 'when original structure is a scalar' do
       let(:original) { 'hello' }
 
-      it 'returns the same value' do
-        is_expected.to eq(original)
-      end
-
-      it 'allows changing of the copy without changing the original' do
-        copy = subject
-        copy += '!'
-
-        expect(copy).to_not eq(original)
+      it 'raises Error' do
+        expect { subject }.to raise_error(NoMethodError)
       end
     end
 
@@ -190,31 +183,12 @@ RSpec.describe 'DeepNest' do
     subject { obj1.deep_equal?(obj2) }
 
     describe 'when parameters are scalar' do
-      describe 'with parameters that are the same' do
-        let(:obj1) { 1 }
-        let(:obj2) { 1 }
 
-        it 'returns true' do
-          is_expected.to be_truthy
-        end
-      end
+      let(:obj1) { 1 }
+      let(:obj2) { '1' }
 
-      describe 'with integer and float that are same value' do
-        let(:obj1) { 1 }
-        let(:obj2) { 1.0 }
-
-        it 'returns false' do
-          is_expected.to be_falsy
-        end
-      end
-
-      describe 'with integer and string that are same value' do
-        let(:obj1) { 1 }
-        let(:obj2) { '1' }
-
-        it 'returns false' do
-          is_expected.to be_falsy
-        end
+      it 'raises Error' do
+        expect { subject }.to raise_error(NoMethodError)
       end
     end
 
@@ -476,8 +450,8 @@ RSpec.describe 'DeepNest' do
 
       let(:obj) { 'hello' }
 
-      it 'returns object' do
-        is_expected.to eq(obj)
+      it 'raises Error' do
+        expect { subject }.to raise_error(NoMethodError)
       end
     end
   end
@@ -547,8 +521,8 @@ RSpec.describe 'DeepNest' do
       let(:obj) { 'hello' }
       let(:expected_results) { 'HELLO' }
 
-      it 'returns object' do
-        is_expected.to eq(expected_results)
+      it 'raises Error' do
+        expect { subject }.to raise_error(NoMethodError)
       end
     end
   end
@@ -594,11 +568,11 @@ RSpec.describe 'DeepNest' do
       end
     end
 
-    describe 'with passed object that is not a hash or array' do
+    describe 'with passed scalar' do
       let(:structure) { 'hello' }
 
-      it 'returns object' do
-        is_expected.to eq(structure)
+      it 'raises Error' do
+        expect { subject }.to raise_error(NoMethodError)
       end
     end
   end
@@ -634,11 +608,11 @@ RSpec.describe 'DeepNest' do
       end
     end
 
-    describe 'with passed object that is not a hash or array' do
+    describe 'with passed scalar' do
       let(:structure) { 'hello' }
 
-      it 'returns object' do
-        is_expected.to eq(structure)
+      it 'raises Error' do
+        expect { subject }.to raise_error(NoMethodError)
       end
     end
   end
