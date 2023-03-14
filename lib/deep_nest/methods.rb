@@ -52,9 +52,9 @@ module DeepNest
       ##
       # Returns true if the passed parameters are same in structure and values, false otherwise.
       #
-      # @param struct1 [Scalar, Hash, Array] First structure to be compared.
+      # @param struct1 [Hash, Array] First structure to be compared.
       #
-      # @param struct2 [Scalar, Hash, Array] Second structure to be compared.
+      # @param struct2 [Hash, Array] Second structure to be compared.
       #
       # @return [true] If parameters are equal in structure and values.
       #
