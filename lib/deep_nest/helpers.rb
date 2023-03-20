@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require_relative 'methods'
+require_relative '../deep_nest'
 
 ##
 # Namespace for helper methods to use self in recursive methods
@@ -17,7 +17,7 @@ module DeepNest
     #
     # @return [Hash, Array] The deep copy of the passed hash or array.
     def deep_dup
-      DeepNest::Methods.deep_dup(self)
+      DeepNest.deep_dup(self)
     end
 
     ##
@@ -31,7 +31,7 @@ module DeepNest
     #
     # @return [Hash] The hash with recursively merged hashes.
     def deep_merge(other_hash, &block)
-      DeepNest::Methods.deep_merge(self, other_hash, &block)
+      DeepNest.deep_merge(self, other_hash, &block)
     end
 
     ##
@@ -45,7 +45,7 @@ module DeepNest
     #
     # @return [false] If parameters are not equal in structure and values.
     def deep_equal?(other_structure)
-      DeepNest::Methods.deep_equal?(self, other_structure)
+      DeepNest.deep_equal?(self, other_structure)
     end
 
     ##
@@ -57,7 +57,7 @@ module DeepNest
     #
     # @return [Hash, Array] The hash or array with transformed keys.
     def deep_transform_keys(&block)
-      DeepNest::Methods.deep_transform_keys(self, &block)
+      DeepNest.deep_transform_keys(self, &block)
     end
 
     ##
@@ -69,7 +69,7 @@ module DeepNest
     #
     # @return [Hash, Array] The hash or array with transformed values.
     def deep_transform_values(&block)
-      DeepNest::Methods.deep_transform_values(self, &block)
+      DeepNest.deep_transform_values(self, &block)
     end
 
     ##
@@ -79,7 +79,7 @@ module DeepNest
     #
     # @return [Hash, Array] The hash or array with stringified keys.
     def deep_stringify_keys
-      DeepNest::Methods.deep_stringify_keys(self)
+      DeepNest.deep_stringify_keys(self)
     end
 
     ##
@@ -89,7 +89,7 @@ module DeepNest
     #
     # @return [Hash, Array] The hash or array with symbolized keys.
     def deep_symbolize_keys
-      DeepNest::Methods.deep_symbolize_keys(self)
+      DeepNest.deep_symbolize_keys(self)
     end
   end
 end
