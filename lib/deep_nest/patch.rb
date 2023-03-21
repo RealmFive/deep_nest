@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require_relative 'deep_nest/helpers'
+require_relative 'helpers'
 
 ##
 # The native Hash Ruby class with monkey patched helper methods.
