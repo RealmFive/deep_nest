@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require_relative 'deep_nest/version'
+require_relative 'deep_nest/helpers'
 
 ##
 # Primary namespace for the deep_nest gem.
