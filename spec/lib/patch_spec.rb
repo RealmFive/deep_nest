@@ -13,7 +13,7 @@ RSpec.describe 'DeepNest::Patch' do
   end
 
   describe 'Hash instance methods' do
-    it 'includes methods in native Array class' do
+    it 'includes methods in native Hash class' do
       methods.each do |deep_nest_method|
         expect(Hash.instance_methods).to include(deep_nest_method)
       end
