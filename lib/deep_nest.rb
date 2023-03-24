@@ -1,10 +1,13 @@
 # frozen_string_literal: true
 
-require_relative "deep_nest/version"
+require_relative 'deep_nest/version'
+require_relative 'deep_nest/helpers'
 
 ##
 # Primary namespace for the deep_nest gem.
 module DeepNest
+  ##
+  # Default error class for DeepNest module.
   class Error < StandardError; end
   class << self
     ##
@@ -51,9 +54,9 @@ module DeepNest
     ##
     # Returns true if the passed parameters are same in structure and values, false otherwise.
     #
-    # @param struct1 [Scalar, Hash, Array] First structure to be compared.
+    # @param struct1 [Hash, Array] First structure to be compared.
     #
-    # @param struct2 [Scalar, Hash, Array] Second structure to be compared.
+    # @param struct2 [Hash, Array] Second structure to be compared.
     #
     # @return [true] If parameters are equal in structure and values.
     #
