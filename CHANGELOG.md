@@ -5,9 +5,8 @@
 ### Include DeepNest in native Ruby classes
 
   - Add helper namespace to use self in recursive methods (i.e. can use `structure.deep_dup` instead of `DeepNest.deep_dup(structure)`).
-  - Move recursive methods from primary namespace to methods namespace
-  - Monkey patch recursive methods in native Hash and Array Ruby classes in primary namespace.
-  - Update spec file for new changes.
+  - Add patch file to allow users to monkey patch recursive methods in native Hash and Array Ruby classes.
+  - Add patch spec.
 
 ## 0.1.0
 
