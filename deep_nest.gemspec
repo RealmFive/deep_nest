@@ -8,8 +8,8 @@ Gem::Specification.new do |spec|
   spec.authors = ["Mattie Hansen"]
   spec.email = ["mattie.hansen@realmfive.com"]
 
-  spec.summary = "Recursive methods for ruby structures."
-  spec.homepage = "https://github.com/RealmFive/deep-nest"
+  spec.summary = "Recursive methods for Ruby structures."
+  spec.homepage = "https://github.com/RealmFive/deep_nest"
   spec.required_ruby_version = Gem::Requirement.new(">= 2.7.2")
 
   spec.metadata["homepage_uri"] = spec.homepage
