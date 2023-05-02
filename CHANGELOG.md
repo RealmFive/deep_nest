@@ -1,5 +1,11 @@
 # DeepNest
 
+## 0.1.2
+
+### Downgrade Required Ruby version
+
+  - Downgraded required Ruby version from 2.7.2 to 2.6.3
+
 ## 0.1.1
 
 ### Include DeepNest in native Ruby classes
